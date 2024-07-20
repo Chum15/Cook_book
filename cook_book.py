@@ -1,12 +1,14 @@
 from pprint import pprint
+from collections import Counter
 
-ST_TITLE = 1
-ST_COUNT = 2
-ST_INGREDIENTS = 3
-
-cook_book = {}
-state = ST_TITLE
 with open("recipes.txt", encoding='utf-8') as f:
+    ST_TITLE = 1
+    ST_COUNT = 2
+    ST_INGREDIENTS = 3
+
+    cook_book = {}
+    state = ST_TITLE
+
     for line in f:
         line = line.strip()
         if not line: continue
@@ -24,20 +26,24 @@ with open("recipes.txt", encoding='utf-8') as f:
             count -= 1
             if count == 0:
                 state = ST_TITLE
-    #print(f.readlines())
+    
 pprint(cook_book)
 def get_shop_list_by_dishes(dishes, person_count):
-
+    counter = Counter(dishes)
+    counter = dict(counter)
+    print(counter)
     dish = {}
-    for d in dishes:
+    for d in dishes:    
         dishes = cook_book[d]
-        for ing in dishes:
-            for i in ing:
-                i = ing['quantity']*person_count  
-            dis = ing['ingredient_name']
-            dish[dis] = dict(list(ing.items())[1:])
-            key = dis   
-            dish[key]['quantity'] = i
-    return dish
+            
+        for di in dishes:
+            for i in di:                
+                dis = di['ingredient_name']
+                dish[dis] = dict(list(di.items())[1:])
+                key = dis 
+                i = di['quantity']*person_count*int(counter[d])
+                dish[key]['quantity'] = i
+
+    return dish 
        
-pprint(get_shop_list_by_dishes(['Фахитос'], 3))
+pprint(get_shop_list_by_dishes(['Омлет', 'Омлет','Утка по-пекински','Утка по-пекински','Омлет'], 2))
