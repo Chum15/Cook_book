@@ -31,7 +31,7 @@ pprint(cook_book)
 def get_shop_list_by_dishes(dishes, person_count):
     counter = Counter(dishes)
     counter = dict(counter)
-    print(counter)
+  
     dish = {}
     for d in dishes:    
         dishes = cook_book[d]
